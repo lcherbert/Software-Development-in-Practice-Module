@@ -3,11 +3,10 @@
 # Number of Vertices in my Network Graph
 V = 5
 
-# Define the 'infinite' value
+# Defining the 'infinite' value
 INF = 9999
 
-# Defining my matrix as an array
-
+# Defining the network matrix as an array
 network_matrix = {
     0: {0: 0,1: 4,2:1 ,3: INF,4:INF},
     1: {0: INF, 1: 0, 2: INF, 3: 4, 2: 2},
@@ -18,13 +17,18 @@ network_matrix = {
 
 # Non-Recursive Floyd-Warshall Algorithm Function
 
+# Calling the defined universal variable V into the function
 def floydwarshall(matrix,V):
 
-    # using v-1 as Python starts at 0 and not at 1
-    
+    # using V-1 as Python starts at 0 and not at 1
     for k in range(V-1):
         for i in range(V-1):
             for j in range(V-1):
                 matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
 
     return matrix
+
+output = floydwarshall(network_matrix, V)
+
+for row in output:
+    print(row)
