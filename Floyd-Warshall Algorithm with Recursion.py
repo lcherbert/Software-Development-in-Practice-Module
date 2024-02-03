@@ -15,3 +15,16 @@ network_matrix = {
     3: {0: 4,1: 1,2: INF,3: 0,4: 3},
     4: {0: INF,1: 3,2: INF,3: 1,4: 0}
 }
+
+# Non-Recursive Floyd-Warshall Algorithm Function
+
+def floydwarshall(matrix,V):
+
+    # using v-1 as Python starts at 0 and not at 1
+    
+    for k in range(V-1):
+        for i in range(V-1):
+            for j in range(V-1):
+                matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
+
+    return matrix
