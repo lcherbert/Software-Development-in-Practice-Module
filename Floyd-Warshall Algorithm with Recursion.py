@@ -1,4 +1,6 @@
-# Floyd-Warshall Algorithm with Recursion
+"""
+Floyd-Warshall Algorithm with Recursion
+"""
 
 # Number of Vertices in my Network Graph
 V = 4
@@ -21,7 +23,7 @@ def floydwarshall(matrix,V):
 
     distance = [row[:] for row in matrix]
 
-# Implement the Algorithm
+    # Implement the Algorithm
     for k in range(V):
         for i in range(V):
             for j in range(V):
@@ -56,10 +58,12 @@ def floydwarshallrecursion(matrix, V, k, i, j):
     else:
         return floydwarshallrecursion(matrix, V, k + 1, 0, 0)
 
-def floydwarshall(matrix, V):
+# Sets the intial parameters to equal 0 and initiate the recursive function
+def algorithm(matrix, V):
     return floydwarshallrecursion(matrix, V, 0, 0, 0)
 
-recursive_output = floydwarshall(network_matrix, V)
+# Assign the output to the variable
+recursive_output = algorithm(network_matrix, V)
 
 # Print the Recursive Implementation of the Algorithm
 print("The Floyd-Warshall Algorithm with recursion:")
