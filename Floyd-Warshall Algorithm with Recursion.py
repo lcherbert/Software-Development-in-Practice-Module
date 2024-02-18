@@ -9,7 +9,7 @@ V = 4
 INF = 9999
 
 # Defining the network matrix as an array
-network_matrix = [
+matrix = [
     [0, 3, 1, INF],
     [INF, 0, INF, 2],
     [1, INF, 0, 2],
@@ -31,7 +31,7 @@ def floydwarshall(matrix,V):
 
     return matrix
 
-nonrecursive_output = floydwarshall(network_matrix, V)
+nonrecursive_output = floydwarshall(matrix, V)
 
 # Print the None-Recursive Algorithm
 print("The Floyd-Warshall Algorithm Output without recursion:")
@@ -63,7 +63,7 @@ def algorithm(matrix, V):
     return floydwarshallrecursion(matrix, V, 0, 0, 0)
 
 # Assign the output to the variable
-recursive_output = algorithm(network_matrix, V)
+recursive_output = algorithm(matrix, V)
 
 # Print the Recursive Implementation of the Algorithm
 print("The Floyd-Warshall Algorithm with recursion:")
