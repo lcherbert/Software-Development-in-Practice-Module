@@ -1,6 +1,8 @@
 """
 Floyd-Warshall Algorithm with Recursion
 """
+# Importing the built-in unit testing module
+import unittest
 
 # Number of Vertices in my Network Graph
 V = 4
@@ -19,7 +21,7 @@ matrix = [
 # Non-Recursive Floyd-Warshall Algorithm Function
 
 # Calling the defined universal variable V into the function
-def floydwarshall(matrix,V):
+def floydwarshalliterative(matrix,V):
 
     distance = [row[:] for row in matrix]
 
@@ -31,12 +33,6 @@ def floydwarshall(matrix,V):
 
     return matrix
 
-nonrecursive_output = floydwarshall(matrix, V)
-
-# Print the None-Recursive Algorithm
-print("The Floyd-Warshall Algorithm Output without recursion:")
-for row in nonrecursive_output:
-    print(row)
 
 # Recursive Floyd-Warshall Algorithm Function
     
@@ -62,10 +58,32 @@ def floydwarshallrecursion(matrix, V, k, i, j):
 def algorithm(matrix, V):
     return floydwarshallrecursion(matrix, V, 0, 0, 0)
 
+class TestFloydWarshall(unittest.TestCase):
+    def test_floyd_washall(self):
+        expected_output = [
+        [0, 3, 1, 3],
+        [5, 0, 6, 2],
+        [1, 3, 0, 2],
+        [3, 1, 4, 0],
+    ]
+        
+        actual_output = algorithm(matrix, V)
+        self.assertEqual(actual_output, expected_output)
+
+        nonrecursive_output = floydwarshalliterative(floydwarshalliterative(matrix, V),V)
+
+# Print the None-Recursive Algorithm
+        print("The Floyd-Warshall Algorithm Output without recursion:")
+        for row in nonrecursive_output:
+            print(row)
+
 # Assign the output to the variable
-recursive_output = algorithm(matrix, V)
+        recursive_output = algorithm(matrix, V)
 
 # Print the Recursive Implementation of the Algorithm
-print("The Floyd-Warshall Algorithm with recursion:")
-for row in recursive_output:
-    print(row)
+        print("The Floyd-Warshall Algorithm with recursion:")
+        for row in recursive_output:
+            print(row)
+
+if __name__ == '__main__':
+    unittest.main()
