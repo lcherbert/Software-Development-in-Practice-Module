@@ -4,6 +4,7 @@ Floyd-Warshall Algorithm with Recursion
 # Importing the built-in unit testing module
 import unittest
 import time
+import resource
 
 # Number of Vertices in my Network Graph
 V = 4
@@ -19,9 +20,15 @@ matrix = [
     [3, 1, INF, 0],
 ]
 
+# Defining variables to track the number of recursions and iterations
 iterative_counter = 0
-
 recursive_counter = 0
+
+def get_memory_usage():
+    memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    # Change the memory usage to MB from KB for clarity
+    memory_usage_mb = memory_usage / 1024.0
+    return memory_usage_mb
 
 # Non-Recursive Floyd-Warshall Algorithm Function
 
@@ -31,15 +38,27 @@ def floydwarshalliterative(matrix,V):
 
     distance = [row[:] for row in matrix]
 
+    start_time = time.time()
+
     # Implement the Algorithm
     for k in range(V):
         for i in range(V):
             for j in range(V):
                 iterative_counter = iterative_counter + int(1)
+                if iterative_counter % 16 == 0:
+                    print("Memory Usage per iteration:", iterative_counter, get_memory_usage(), "MB")
                 matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
 
-    return (matrix,iterative_counter)
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print("Execution Time for the Iterative Function: ", execution_time, "seconds.")
+    print("The Floyd-Warshall Algorithm Output without recursion:")
+    for row in matrix:
+        print(row)
 
+    print("Number of Iterations: ", iterative_counter)
+
+    return (matrix)
 
 # Recursive Floyd-Warshall Algorithm Function
     
@@ -48,6 +67,10 @@ def floydwarshallrecursion(matrix, V, k, i, j):
     global recursive_counter
 
     recursive_counter = recursive_counter + int(1)
+
+    if recursive_counter % 16 == 0:
+        print("Memory Usage per recursion:", recursive_counter, get_memory_usage(), "MB")
+
     if k >= V:
         return (matrix)
     
@@ -65,24 +88,23 @@ def floydwarshallrecursion(matrix, V, k, i, j):
 
 # Sets the intial parameters to equal 0 and initiate the recursive function
 def algorithm(matrix, V):
-    return floydwarshallrecursion(matrix, V, 0, 0, 0)
+    start_time = time.time()
+    result = floydwarshallrecursion(matrix, V, 0, 0, 0)
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print("Execution Time for the Recursive Function: ", execution_time, "seconds.")
+# Print the Recursive Implementation of the Algorithm
+    print("The Floyd-Warshall Algorithm with recursion:")
+    for row in matrix:
+        print(row)
+    
+    print("Number of Recursions: ", recursive_counter)
 
-nonrecursive_output = floydwarshalliterative(matrix, V)
+    return result
 
 # Print the None-Recursive Algorithm
-print("The Floyd-Warshall Algorithm Output without recursion:")
-for row in nonrecursive_output:
-    print(row)
-print("Number of Iterations: ", iterative_counter)
 
-# Assign the output to the variable
-recursive_output = algorithm(matrix, V)
 
-# Print the Recursive Implementation of the Algorithm
-print("The Floyd-Warshall Algorithm with recursion:")
-for row in recursive_output:
-    print(row)
-print("Number of Recursions: ", recursive_counter)
 
 class TestFloydWarshall(unittest.TestCase):
     def test_floyd_warshall_iterative(self):
@@ -93,15 +115,8 @@ class TestFloydWarshall(unittest.TestCase):
             [3, 1, 4, 0],
         ]
         
-        # Measure the time taken for the iterative function
-        start_time = time.time()
-        actual_output, _ = floydwarshalliterative(matrix, V)
-        end_time = time.time()
-
+        actual_output = floydwarshalliterative(matrix, V)
         self.assertEqual(actual_output, expected_output)
-
-        execution_time = end_time - start_time
-        print("Function Execution Time for the Iterative Function: ", execution_time, "seconds.")
 
     def test_floyd_warshall_recursive(self):
         expected_output = [
@@ -112,14 +127,8 @@ class TestFloydWarshall(unittest.TestCase):
         ]
         
         # Measure the time taken for the Recursive function
-        start_time = time.time()
         actual_output = algorithm(matrix, V)
-        end_time = time.time()
-
         self.assertEqual(actual_output, expected_output)
 
-        execution_time = end_time - start_time
-        print("Function Execution Time for the Recursive Function: ", execution_time, "seconds.")
-
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main() 
