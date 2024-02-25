@@ -41,7 +41,7 @@ def floydwarshalliterative(matrix,V):
 
     distance = [row[:] for row in matrix_copy]
 
-    start_time = time.time()
+    start_time = time.perf_counter()
 
     # Implement the Algorithm
     for k in range(V):
@@ -52,7 +52,7 @@ def floydwarshalliterative(matrix,V):
                     print("Memory Usage per iteration:", ITERATIVE_COUNTER, get_memory_usage(), "MB")
                 matrix_copy[i][j] = min(matrix_copy[i][j], matrix_copy[i][k] + matrix_copy[k][j])
 
-    end_time = time.time()
+    end_time = time.perf_counter()
     execution_time = end_time - start_time
     print("Execution Time for the Iterative Function: ", execution_time, "seconds.")
     print("The Floyd-Warshall Algorithm Output without recursion:")
@@ -90,9 +90,9 @@ def floydwarshallrecursion(matrix, V, k, i, j):
 
 # Sets the intial parameters to equal 0 and initiate the recursive function
 def algorithm(matrix, V):
-    start_time = time.time()
+    start_time = time.perf_counter()
     result = floydwarshallrecursion(matrix, V, 0, 0, 0)
-    end_time = time.time()
+    end_time = time.perf_counter()
     execution_time = end_time - start_time
     print("Execution Time for the Recursive Function: ", execution_time, "seconds.")
     # Print the Recursive Implementation of the Algorithm
