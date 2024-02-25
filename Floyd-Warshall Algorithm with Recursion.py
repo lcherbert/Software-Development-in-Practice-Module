@@ -93,6 +93,7 @@ class TestFloydWarshall(unittest.TestCase):
             [3, 1, 4, 0],
         ]
         
+        # Measure the time taken for the iterative function
         start_time = time.time()
         actual_output, _ = floydwarshalliterative(matrix, V)
         end_time = time.time()
@@ -100,7 +101,7 @@ class TestFloydWarshall(unittest.TestCase):
         self.assertEqual(actual_output, expected_output)
 
         execution_time = end_time - start_time
-        print("Function Execution Time for the Recursive Function: ", execution_time, "seconds.")
+        print("Function Execution Time for the Iterative Function: ", execution_time, "seconds.")
 
     def test_floyd_warshall_recursive(self):
         expected_output = [
@@ -110,6 +111,7 @@ class TestFloydWarshall(unittest.TestCase):
             [3, 1, 4, 0],    
         ]
         
+        # Measure the time taken for the Recursive function
         start_time = time.time()
         actual_output = algorithm(matrix, V)
         end_time = time.time()
