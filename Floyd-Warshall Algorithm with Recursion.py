@@ -3,6 +3,7 @@ Floyd-Warshall Algorithm with Recursion
 """
 # Importing the built-in unit testing module
 import unittest
+import time
 
 # Number of Vertices in my Network Graph
 V = 4
@@ -84,16 +85,39 @@ for row in recursive_output:
 print("Number of Recursions: ", recursive_counter)
 
 class TestFloydWarshall(unittest.TestCase):
-    def test_floyd_washall(self):
+    def test_floyd_warshall_iterative(self):
         expected_output = [
-        [0, 3, 1, 3],
-        [5, 0, 6, 2],
-        [1, 3, 0, 2],
-        [3, 1, 4, 0],
-    ]
+            [0, 3, 1, 3],
+            [5, 0, 6, 2],
+            [1, 3, 0, 2],
+            [3, 1, 4, 0],
+        ]
         
-        actual_output = algorithm(matrix, V)
+        start_time = time.time()
+        actual_output, _ = floydwarshalliterative(matrix, V)
+        end_time = time.time()
+
         self.assertEqual(actual_output, expected_output)
+
+        execution_time = end_time - start_time
+        print("Function Execution Time for the Recursive Function: ", execution_time, "seconds.")
+
+    def test_floyd_warshall_recursive(self):
+        expected_output = [
+            [0, 3, 1, 3],
+            [5, 0, 6, 2],
+            [1, 3, 0, 2],
+            [3, 1, 4, 0],    
+        ]
+        
+        start_time = time.time()
+        actual_output = algorithm(matrix, V)
+        end_time = time.time()
+
+        self.assertEqual(actual_output, expected_output)
+
+        execution_time = end_time - start_time
+        print("Function Execution Time for the Recursive Function: ", execution_time, "seconds.")
 
 if __name__ == '__main__':
     unittest.main()
