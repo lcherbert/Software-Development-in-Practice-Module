@@ -36,7 +36,10 @@ def get_memory_usage():
 def floydwarshalliterative(matrix,V):
     global ITERATIVE_COUNTER
 
-    distance = [row[:] for row in matrix]
+    # Changing the iterative function to use a copy of the matrix
+    matrix_copy = [row[:] for row in matrix]
+
+    distance = [row[:] for row in matrix_copy]
 
     start_time = time.time()
 
@@ -47,18 +50,18 @@ def floydwarshalliterative(matrix,V):
                 ITERATIVE_COUNTER = ITERATIVE_COUNTER + int(1)
                 if ITERATIVE_COUNTER % 16 == 0:
                     print("Memory Usage per iteration:", ITERATIVE_COUNTER, get_memory_usage(), "MB")
-                matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
+                matrix_copy[i][j] = min(matrix_copy[i][j], matrix_copy[i][k] + matrix_copy[k][j])
 
     end_time = time.time()
     execution_time = end_time - start_time
     print("Execution Time for the Iterative Function: ", execution_time, "seconds.")
     print("The Floyd-Warshall Algorithm Output without recursion:")
-    for row in matrix:
+    for row in matrix_copy:
         print(row)
 
     print("Number of Iterations: ", ITERATIVE_COUNTER)
 
-    return (matrix)
+    return matrix_copy
 
 # Recursive Floyd-Warshall Algorithm Function
     
